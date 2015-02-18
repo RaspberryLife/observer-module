@@ -20,4 +20,4 @@ def sendMessage( message ):
 
     return;
 
-sendMessage( "hallo" );
+sendMessage( "Bewegung erkannt" );
