@@ -1,6 +1,19 @@
-#! /usr/bin/ python
+#!/usr/bin/python
+#-----------------------------------
+# take photos and play alarmfile when motion is detected
+#
+# Author
+: Jasmin Sunitsch
+# Contact
+: RaspberrySPiProjekt@gmail.com
+# Date
+: 30/01/2015
+# Version
+: 3.0
+# Requires Raspberry Pi, PiCam, Motion Detector, WLAN or UMTS
+#
+#-----------------------------------
 # -*- coding: UTF-8 -*-
-# Observer autark
 
 import thread
 import pygame
