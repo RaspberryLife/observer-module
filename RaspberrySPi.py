@@ -18,9 +18,14 @@
 import thread
 import pygame
 import RPi.GPIO as GPIO
-import time 
+import time
 import os
+import os.path
 import subprocess
+import smtplib
+from email.MIMEMultipart import MIMEMultipart
+from email.MIMEImage import MIMEImage
+from email.MIMEText import MIMEText
 
 GPIO.setmode(GPIO.BCM)
 PIR_PIN = 7
