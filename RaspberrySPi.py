@@ -4,10 +4,10 @@
 #
 # Author    : Jasmin Sunitsch
 # Contact   : RaspberrySPiProjekt@gmail.com or Mail@JamBid.de
-# Date      : 30/01/2015
+# Date      : 17/11/2015
 #
 # Requires Raspberry Pi, PiCam, Motion Detector, WLAN or UMTS 
-# 
+# Licence   : Feel free to use 
 #
 #-----------------------------------
 # -*- coding: UTF-8 -*-
@@ -60,6 +60,10 @@ def mailSend():
 	server.quit()
 
 	
+
+def isSpiOn():
+	return os.path.exists("/var/www/file.spi")
+
 def warte(t):
 	sleepTime = 1-(t-time.time())
 	if sleepTime < 0:
@@ -68,35 +72,37 @@ def warte(t):
 
 def playSound():
 	if not pygame.mixer.get_busy():
-		alarmSound.play(loops=5)
+		alarmSound.play(loops=1)
 
 def getImage():
-	bildName = (time.strftime("%H%M%S_%d%m%y"))			
-	cmdString = 'sudo raspistill -o ./images/' + bildName + '.jpg --nopreview --timeout 1'
+	global bildName
+	bildName = time.strftime("%H%M%S_%d%m%y")
+	cmdString = 'sudo raspistill -o ./images/' + bildName + '.jpg --nopreview --timeout 1 -w 1280 -h 720'
 	subprocess.call(cmdString,shell=True)
 
 try:
-	print "Raumbetrachtung aktiv"
+	print "RaspBerrySpi ACTIVE!"
 	
 	while True:
 
 		startTime = time.time()
 
-		if GPIO.input(PIR_PIN):
-			print "Erkenne Bewegung!"
+		if GPIO.input(PIR_PIN) and isSpiOn():
+			print "ALARM!"
 			
 			#thread.start_new_thread(playSound,(0,))
 			#thread.start_new_thread(getImage,(0,))
-			
+			#02.02.2015 on / off Function via Webinterface
 			playSound()
 			getImage()
-
+			mailSend()
+			
 		else:
-			print "Keine Bewegung!"
+			print "No motion deteced!"
 	
 		warte(startTime)		
 	
 except KeyboardInterrupt:
 
-	print "Raumbetrachtung beendet"
+	print "RaspberrySPi INACTIVE"
 	GPIO.cleanup()
