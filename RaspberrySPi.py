@@ -47,7 +47,19 @@ def mailSend():
 	bildDatei = file(bildDateiName)
 	image = MIMEImage(bildDatei.read(), _subtype="jpeg")
 	msg.attach(image)
+	
+	#Credentials (if needed) 
+	username = 'username-mailaccount'
+	password = 'password-mailaccount'
+	
+	# example-Server Googlemail.com
+	server = smtplib.SMTP('smtp.gmail.com:587')
+	server.starttls()
+	server.login(username,password)
+	server.sendmail(fromaddr, toaddrs, msg.as_string())
+	server.quit()
 
+	
 def warte(t):
 	sleepTime = 1-(t-time.time())
 	if sleepTime < 0:
