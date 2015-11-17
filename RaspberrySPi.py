@@ -2,15 +2,12 @@
 #-----------------------------------
 # take photos and play alarmfile when motion is detected
 #
-# Author
-: Jasmin Sunitsch
-# Contact
-: RaspberrySPiProjekt@gmail.com
-# Date
-: 30/01/2015
-# Version
-: 3.0
-# Requires Raspberry Pi, PiCam, Motion Detector, WLAN or UMTS
+# Author    : Jasmin Sunitsch
+# Contact   : RaspberrySPiProjekt@gmail.com or Mail@JamBid.de
+# Date      : 30/01/2015
+#
+# Requires Raspberry Pi, PiCam, Motion Detector, WLAN or UMTS 
+# 
 #
 #-----------------------------------
 # -*- coding: UTF-8 -*-
@@ -18,7 +15,7 @@
 import thread
 import pygame
 import RPi.GPIO as GPIO
-import time
+import time 
 import os
 import os.path
 import subprocess
@@ -31,8 +28,12 @@ GPIO.setmode(GPIO.BCM)
 PIR_PIN = 7
 GPIO.setup(PIR_PIN, GPIO.IN)
 
+
+pygame.init()
 pygame.mixer.init()
 alarmSound = pygame.mixer.Sound("./audio/alarm.wav")
+bildName = 'na'
+
 
 def warte(t):
 	sleepTime = 1-(t-time.time())
