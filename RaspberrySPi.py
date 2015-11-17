@@ -34,6 +34,19 @@ pygame.mixer.init()
 alarmSound = pygame.mixer.Sound("./audio/alarm.wav")
 bildName = 'na'
 
+def mailSend():
+	fromaddr = 'SEND-FROM-MAILADRESS'
+	toaddrs  = 'SEND-ALARMTO-MAILADRESS'
+	
+	msg=MIMEMultipart()
+	msg['From']='Spi - Observer'
+	msg['To']='raspberryspiprojekt@gmail.com'
+	msg['Subject']='Message from SPi - Motion detected'
+	
+	bildDateiName = './images/' + bildName + '.jpg'
+	bildDatei = file(bildDateiName)
+	image = MIMEImage(bildDatei.read(), _subtype="jpeg")
+	msg.attach(image)
 
 def warte(t):
 	sleepTime = 1-(t-time.time())
